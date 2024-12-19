@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -194,6 +195,29 @@ fun DrawTable(info: ArrayList<Map<String, Double>>, hasAverage: Boolean) {
                         text = "%.4f".format(item[key]),
                         modifier = Modifier
                             .weight(1f)
+                            .background(
+                                if (index ==
+                                    info.size - 1 && hasAverage
+                                ) Color.LightGray else Color.Transparent
+                            )
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun DrawTable2(info: ArrayList<Map<String, Double>>, hasAverage: Boolean) {
+    if (info.isNotEmpty()) {
+        var header = info[0].keys
+        info.forEachIndexed { index, item ->
+            Row() {
+                header.forEach { key ->
+                    Text(
+                        text = "%.4f".format(item[key]),
+                        modifier = Modifier
+                            .width(80.dp)
                             .background(
                                 if (index ==
                                     info.size - 1 && hasAverage

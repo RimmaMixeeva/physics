@@ -67,19 +67,19 @@ fun firstScreen(activity: Activity) {
         }
 
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "Введите m", fontSize = 25.sp)
+        Text(text = "Введите m (кг)", fontSize = 25.sp)
         TextField(
             value = m,
             onValueChange = { newValue -> m = newValue })
-        Text(text = "Введите l (length)", fontSize = 25.sp)
+        Text(text = "Введите l (м)", fontSize = 25.sp)
         TextField(
             value = l,
             onValueChange = { newValue -> l = newValue })
-        Text(text = "Введите a", fontSize = 25.sp)
+        Text(text = "Введите a (градусы)", fontSize = 25.sp)
         TextField(
             value = a,
             onValueChange = { newValue -> a = newValue })
-        Text(text = "Введите b", fontSize = 25.sp)
+        Text(text = "Введите b (градусы)", fontSize = 25.sp)
         TextField(
             value = b,
             onValueChange = { newValue -> b = newValue })

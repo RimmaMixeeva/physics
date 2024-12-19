@@ -3,11 +3,13 @@ package com.example.phisica.screens
 import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -26,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.phisica.DrawTable
+import com.example.phisica.DrawTable2
 import com.example.phisica.calculations.Case1Calculations
 import com.example.phisica.calculations.Case2Calculations
 import com.example.phisica.defaultData.DefaultData
@@ -43,16 +46,19 @@ fun secondScreen(activity: Activity) {
             rememberScrollState()
         )
     ) {
-        Row() {
-            DefaultData.secondHeader.forEach { value ->
-                Text(
-                    text = value, modifier = Modifier
-                        .weight(1f)
-                        .background(Color.Green)
-                )
+        Column(modifier = Modifier.horizontalScroll(rememberScrollState())) {
+            Row() {
+                DefaultData.secondHeader.forEach { value ->
+                    Text(
+                        text = value, modifier = Modifier
+                            .width(80.dp)
+                            .background(Color.Green)
+                    )
+                }
             }
+            DrawTable2(info = info, hasAverage)
         }
-        DrawTable(info = info, hasAverage)
+
 
         var m1 by remember {
             mutableStateOf("")
@@ -74,27 +80,27 @@ fun secondScreen(activity: Activity) {
         }
 
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "Введите m1", fontSize = 25.sp)
+        Text(text = "Введите m1 (кг)", fontSize = 25.sp)
         TextField(
             value = m1,
             onValueChange = { newValue -> m1 = newValue })
-        Text(text = "Введите m2", fontSize = 25.sp)
+        Text(text = "Введите m2 (кг)", fontSize = 25.sp)
         TextField(
             value = m2,
             onValueChange = { newValue -> m2 = newValue })
-        Text(text = "Введите l (length)", fontSize = 25.sp)
+        Text(text = "Введите l (length) (м)", fontSize = 25.sp)
         TextField(
             value = l,
             onValueChange = { newValue -> l = newValue })
-        Text(text = "Введите a", fontSize = 25.sp)
+        Text(text = "Введите a (градусы)", fontSize = 25.sp)
         TextField(
             value = a,
             onValueChange = { newValue -> a = newValue })
-        Text(text = "Введите b1", fontSize = 25.sp)
+        Text(text = "Введите b1 (градусы)", fontSize = 25.sp)
         TextField(
             value = b1,
             onValueChange = { newValue -> b1 = newValue })
-        Text(text = "Введите b2", fontSize = 25.sp)
+        Text(text = "Введите b2 (градусы)", fontSize = 25.sp)
         TextField(
             value = b2,
             onValueChange = { newValue -> b2 = newValue })
@@ -140,7 +146,7 @@ fun secondScreen(activity: Activity) {
                     info = ArrayList(info).apply {
                         add(
                             Case2Calculations(
-                                lstWithAverage["m"] ?: 0.0,
+                                lstWithAverage["m1"] ?: 0.0,
                                 lstWithAverage["m2"] ?: 0.0,
                                 lstWithAverage["l"] ?: 0.0,
                                 lstWithAverage["a"] ?: 0.0,

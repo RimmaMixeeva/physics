@@ -3,11 +3,13 @@ package com.example.phisica.screens
 import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -26,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.phisica.DrawTable
+import com.example.phisica.DrawTable2
 import com.example.phisica.calculations.Case2Calculations
 import com.example.phisica.calculations.Case3Calculations
 import com.example.phisica.defaultData.DefaultData
@@ -43,17 +46,18 @@ fun thirdScreen(activity: Activity){
             rememberScrollState()
         )
     ) {
-        Row() {
-            DefaultData.thirdHeader.forEach { value ->
-                Text(
-                    text = value, modifier = Modifier
-                        .weight(1f)
-                        .background(Color.Green)
-                )
+        Column(modifier = Modifier.horizontalScroll(rememberScrollState())) {
+            Row() {
+                DefaultData.thirdHeader.forEach { value ->
+                    Text(
+                        text = value, modifier = Modifier
+                            .width(80.dp)
+                            .background(Color.Green)
+                    )
+                }
             }
+            DrawTable2(info = info, hasAverage)
         }
-        DrawTable(info = info, hasAverage)
-
         var m by remember {
             mutableStateOf("")
         }
@@ -71,23 +75,23 @@ fun thirdScreen(activity: Activity){
         }
 
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "Введите R", fontSize = 25.sp)
+        Text(text = "Введите R (м)", fontSize = 25.sp)
         TextField(
             value = r,
             onValueChange = { newValue -> r = newValue })
-        Text(text = "Введите m", fontSize = 25.sp)
+        Text(text = "Введите m (кг)", fontSize = 25.sp)
         TextField(
             value = m,
             onValueChange = { newValue -> m = newValue })
-        Text(text = "Введите a", fontSize = 25.sp)
+        Text(text = "Введите a (градусы)", fontSize = 25.sp)
         TextField(
             value = a,
             onValueChange = { newValue -> a = newValue })
-        Text(text = "Введите b", fontSize = 25.sp)
+        Text(text = "Введите b (градусы)", fontSize = 25.sp)
         TextField(
             value = b,
             onValueChange = { newValue -> b = newValue })
-        Text(text = "Введите t", fontSize = 25.sp)
+        Text(text = "Введите t (сек)", fontSize = 25.sp)
         TextField(
             value = t,
             onValueChange = { newValue -> t = newValue })
