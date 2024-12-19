@@ -36,6 +36,8 @@ import com.example.phisica.calculations.Case1Calculations
 import com.example.phisica.defaultData.DefaultData
 import com.example.phisica.functionalHelp.countAverage
 import com.example.phisica.screens.firstScreen
+import com.example.phisica.screens.secondScreen
+import com.example.phisica.screens.thirdScreen
 import com.example.phisica.ui.theme.PhisicaTheme
 import java.lang.Exception
 
@@ -96,15 +98,13 @@ class MainActivity : ComponentActivity() {
                     }
 
                     2 -> {
-
+                        secondScreen(activity = activity)
                     }
 
                     3 -> {
-
+                        thirdScreen(activity = activity)
                     }
                 }
-
-
             }
         }
     }
@@ -191,7 +191,7 @@ fun DrawTable(info: ArrayList<Map<String, Double>>, hasAverage: Boolean) {
             Row() {
                 header.forEach { key ->
                     Text(
-                        text = "%.3f".format(item[key]),
+                        text = "%.4f".format(item[key]),
                         modifier = Modifier
                             .weight(1f)
                             .background(
