@@ -1,52 +1,50 @@
 package com.example.phisica
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.phisica.calculations.Case1Calculations
 import com.example.phisica.defaultData.DefaultData
-import com.example.phisica.functionalHelp.findAverage
+import com.example.phisica.functionalHelp.countAverage
+import com.example.phisica.screens.firstScreen
 import com.example.phisica.ui.theme.PhisicaTheme
+import java.lang.Exception
 
 class MainActivity : ComponentActivity() {
+    val activity = this
+
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var info = arrayListOf<Map<String, Double>>()
-        info.add(Case1Calculations(
-            DefaultData.firstData1[0],
-            DefaultData.firstData1[1],
-            DefaultData.firstData1[2],
-            DefaultData.firstData1[3]
-        ))
-        info.add(Case1Calculations(
-            DefaultData.firstData2[0],
-            DefaultData.firstData2[1],
-            DefaultData.firstData2[2],
-            DefaultData.firstData2[3]
-        ))
-        info.add(Case1Calculations(
-            DefaultData.firstData3[0],
-            DefaultData.firstData3[1],
-            DefaultData.firstData3[2],
-            DefaultData.firstData3[3]
-        ))
-        info.add(Case1Calculations(
-         findAverage(DefaultData.firstData1[0], DefaultData.firstData2[0], DefaultData.firstData3[0]),
-         findAverage(DefaultData.firstData1[1], DefaultData.firstData2[1], DefaultData.firstData3[1]),
-         findAverage(DefaultData.firstData1[2], DefaultData.firstData2[2], DefaultData.firstData3[2]),
-         findAverage(DefaultData.firstData1[3], DefaultData.firstData2[3], DefaultData.firstData3[3]),
-        ))
 
         //mode 0 - ничего не выбрали ещё
         //mode 1 - ластилиновые шары, абсолютно неупругий удар
@@ -55,12 +53,56 @@ class MainActivity : ComponentActivity() {
         //undermode 0 - таблица
         //undermode 1 - ручной рассчет
         setContent {
-            PhisicaTheme {
-               var mode by remember{
-                   mutableStateOf(0)
-               }
+            var mode by remember {
+                mutableStateOf(0)
+            }
+            BackHandler() {
+                if (mode != 0) {
+                    mode = 0
+                }
+            }
 
-                DrawTable(info = info)
+            PhisicaTheme {
+                when (mode) {
+                    0 -> {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "Задание 1",
+                                modifier = Modifier
+                                    .clickable { mode = 1 },
+                                fontSize = 50.sp
+                            )
+                            Text(
+                                text = "Задание 2",
+                                modifier = Modifier
+                                    .clickable { mode = 2 },
+                                fontSize = 50.sp
+                            )
+                            Text(
+                                text = "Задание 3",
+                                modifier = Modifier
+                                    .clickable { mode = 3 },
+                                fontSize = 50.sp
+                            )
+                        }
+                    }
+
+                    1 -> {
+                        firstScreen(activity = activity)
+                    }
+
+                    2 -> {
+
+                    }
+
+                    3 -> {
+
+                    }
+                }
 
 
             }
@@ -142,25 +184,23 @@ class MainActivity : ComponentActivity() {
 //}
 
 @Composable
-fun DrawTable(info: ArrayList<Map<String, Double>>) {
-    var header = info[0].keys
-    Column() {
-        Row() {
-            header.forEach { value ->
-                Text(text = value, modifier = Modifier.weight(1f).background(Color.Green))
-            }
-        }
-        info.dropLast(1).forEach { item ->
+fun DrawTable(info: ArrayList<Map<String, Double>>, hasAverage: Boolean) {
+    if (info.isNotEmpty()) {
+        var header = info[0].keys
+        info.forEachIndexed { index, item ->
             Row() {
                 header.forEach { key ->
-                    Text(text = "%.3f".format(item[key]), modifier = Modifier.weight(1f))
+                    Text(
+                        text = "%.3f".format(item[key]),
+                        modifier = Modifier
+                            .weight(1f)
+                            .background(
+                                if (index ==
+                                    info.size - 1 && hasAverage
+                                ) Color.LightGray else Color.Transparent
+                            )
+                    )
                 }
-            }
-        }
-        Row() {
-            header.forEach { key ->
-                Text(text = "%.3f".format(info.get(info.size-1)[key]), modifier = Modifier.weight(1f).background(
-                    Color.LightGray))
             }
         }
     }

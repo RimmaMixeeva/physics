@@ -25,13 +25,6 @@ fun Case1Calculations (m: Double, length: Double, alpha: Double, betta: Double?)
     val pAfter= 2 * m * u
 
     // Вывод результатов
-    var result = mutableMapOf<String, Double>()
-    result["m"] = m
-    result["l"] = length
-    result["a"] = alpha
-    result["b"] = betta
-    result["p"] = pBefore
-    result["p\'"] = pAfter
-
+    var result = mapOf<String, Double>("m" to m, "l" to length, "a" to alpha, "b" to betta, "p" to pBefore, "p\'" to pAfter)
     return result
   }
