@@ -18,7 +18,7 @@ fun Case1Calculations (m: Double, length: Double, alpha: Double, betta: Double?)
     val u = v1 / 2
 
     if (betta == null){//на случай, если угол надо рассчитать
-    betta = Acos(1 - (u*u)/(2*g*length))
+        betta = Acos(1 - (u*u)/(2*g*length))
     }
 
     // Импульс после удара p' = 2m * v'
